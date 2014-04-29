@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <Button android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_join_train_button"
+            android:id="@+id/main_join_train_button" >
+
+    </Button>
+
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="@string/main_join_existing_trains_text" />
+
+    <ListView android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/main_join_train_list" />
+
+    <Button android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_start_train_button"
+            android:id="@+id/main_start_train_button" >
+
+    </Button>
+
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="@string/main_start_past_trains_text" />
+
+    <ListView android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/main_start_train_list"  />
+
+</LinearLayout>
