@@ -10,32 +10,48 @@
 <BODY >
 <?php if ($sessionId) { ?>
     <div id='dest-entry' style='margin:5px;'>
+    <FORM method='post' action='routes.php' >
+    <input type='hidden' name='origin' value='browserRoute' />
+    <input type='hidden' name='startLat' id='startLat' value='' /><input type='hidden' name='startLng' id='startLng' value='' />
+    <input type='hidden' name='endLat' id='endLat' value='' /><input type='hidden' name='endLng' id='endLng' value='' />
+    <input type='hidden' name='path' id='path' value='' /><input type='hidden' name='levels' id='levels' value='' />
+    <input type='hidden' name='distance' id='distance' value='' />
+
     <B>Create a Bike Train Route!</B>&nbsp;&nbsp;&nbsp;&nbsp;
     Where are you starting? <input type='text' name='startLocation' id='startLocation' style='width:300px;' />
     &nbsp;&nbsp;&nbsp;&nbsp;Where do you want to end up?  <input type='text' name='endLocation' id='endLocation' style='width:300px;' />
-    &nbsp;&nbsp;&nbsp;&nbsp;<input type='button' name='saveRouteButton' id='saveRouteButton' value='Save Route' disabled />
+    &nbsp;&nbsp;&nbsp;&nbsp;<input type='button' name='saveRouteButton' id='saveRouteButton' value='Save Route' disabled onclick="submit();" />
     </div>
+    </FORM>
+     &nbsp;&nbsp;&nbsp;&nbsp;<a href='logout.php?origin=browserRoute'>Logout</a>
 <?php } else { ?>
 <div id='loginDiv' style='margin:5px;'>
+<FORM method='post' action='index.php' >
+<input type='hidden' name='origin' value='browserRoute' />
     <B>Login to Create a Bike Train Route!</B> &nbsp;&nbsp;&nbsp;&nbsp;
    Email: <input type='text' name='loginEmail' id='loginEmail' />
    &nbsp;&nbsp;&nbsp;&nbsp;Password:  <input type='password' name='loginPassword' id='loginPassword' />
-   &nbsp;&nbsp;&nbsp;&nbsp;<input type='button' name='loginButton' id='loginButton' value='Login' />
+   &nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='loginButton' id='loginButton' value='Login' />
    &nbsp;&nbsp;&nbsp;&nbsp;Don't have an account? <a href='' onclick="document.getElementById('registerDiv').style.display='block'; return false;">Register Here!</a>
+   <?php if ($badLogin) { print "<BR><FONT color='red'>Username or password not found</FONT>"; } ?>
+</FORM>
 </div>
 <div id='registerDiv' style='margin:5px;display:none;' >
+<FORM method='post' action='registerUser.php' >
+<input type='hidden' name='origin' value='browserRoute' />
 <P>Email: <input type='text' name='email' id='email' />
 &nbsp;&nbsp;&nbsp;&nbsp;Password: <input type='password' name='password' id='password' />
 &nbsp;&nbsp;&nbsp;&nbsp;Confirm Password: <input type='password' name='confirmPassword' id='confirmPassword' /></P>
 <P>First Name:  <input type='text' name='firstName' id='firstName' />
-&nbsp;&nbsp;&nbsp;&nbsp;Last Name: <input type='text' name='lastName' id='lastName' />
-&nbsp;&nbsp;&nbsp;&nbsp;Facebook Username (optional): <input type='text' name='facebook' id='facebook' />
+&nbsp;&nbsp;&nbsp;&nbsp;Last Name: <input type='text' name='lastName' id='lastName' /></P>
+<P>Facebook Username (optional): <input type='text' name='facebook' id='facebook' />
 &nbsp;&nbsp;&nbsp;&nbsp;Who can see your name/Facebook? <SELECT name='displayLevel' id='displayLevel'><OPTION value='never'>No one</OPTION>
-<OPTION value='friends'>Friends</OPTION><OPTION value='friendsOfFriends'>Friends of Friends</OPTION><OPTION value='everyone'>Everyone</OPTION></SELECT></P>
-&nbsp;&nbsp;&nbsp;&nbsp;<input type='button' name='registerButton' id='registerButton' value='Create My Account!' />
+<OPTION value='friends'>Friends</OPTION><OPTION value='friendsOfFriends'>Friends of Friends</OPTION><OPTION value='everyone'>Everyone</OPTION></SELECT>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='registerButton' id='registerButton' value='Create My Account!' onclick="if (document.getElementById('password').value != document.getElementById('confirmPassword').value) { alert('Passwords don't match'); return false; } " /></P>
+</FORM>
 </div>
 <?php } ?>
-<div id='map-canvas' style='width:100%;height:100%;'></div>
+<div id='map-canvas' style='width:100%;height:90%;'></div>
 <script>
 var rendererOptions = {
   draggable: true
@@ -70,10 +86,27 @@ function calcRoute(pointA, pointB) {
         directionsDisplay.setDirections(response);
         startMarker.setVisible(false);
         endMarker.setVisible(false);
+
+        /*points = result.routes[0].overview_polyline.points;
+        levels = result.routes[0].overview_polyline.levels;
+
+        decodedStr = google.maps.geometry.encoding.decodePath(points);
+        decodedStr = decodedStr.replace(/\\/g,"\\\\");
+
+        document.getElementById('path').value = decodedStr;
+        document.getElementById('levels').value = levels;
+
+        var total = 0;
+        for (i = 0; i < result.routes[0].legs.length; i++) {
+            total += results.routes[0].legs[i].distance.value;
+        }
+        document.getElementById("distance").value = total;*/
+
+        document.getElementById('saveRouteButton').disabled = false;
     }
   });
 
-  document.getElementById('saveRouteButton').disabled = false;
+
 }
 
 <?php if ($sessionId) { ?>
@@ -90,6 +123,8 @@ google.maps.event.addListener(autocompleteStart, 'place_changed', function() {
       });
 
     start = place.geometry.location;
+    document.getElementById('startLat').value = start.lat();
+    document.getElementById('startLng').value = start.lng();
     if (start && finish) {
         calcRoute(start, finish);
     }
@@ -104,6 +139,9 @@ google.maps.event.addListener(autocompleteFinish, 'place_changed', function() {
              });
 
     finish = place.geometry.location;
+    document.getElementById('finishLat').value = finish.lat();
+    document.getElementById('finishLng').value = finish.lng();
+
     if (start && finish) {
         calcRoute(start, finish);
     }

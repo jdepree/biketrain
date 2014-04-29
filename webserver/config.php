@@ -1,10 +1,10 @@
 <?php
-define ('DB_HOST', 'your_db_server');
-define ('DB_USER', 'your_db_username');
-define ('DB_PASSWORD', 'your_db_password');
+define ('DB_HOST', 'localhost');
+define ('DB_USER', 'oar');
+define ('DB_PASSWORD', 'gearshed');
 define ('DB_DATABASE', 'biketrain');
-define ('BASE_URL', 'http://your-site-url');
-define ('ADMIN_EMAIL', 'admin@your-site-url');
+define ('BASE_URL', 'http://localhost');
+define ('ADMIN_EMAIL', 'admin@localhost');
 
 function sendMailSend($receiver, $subject, $body, $from) {
 	print "<P style='color:red;'>Sending mail to $receiver.  Subject: $subject.  Body: $body</P>";
