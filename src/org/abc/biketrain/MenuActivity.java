@@ -23,6 +23,8 @@ public class MenuActivity extends Activity {
 
         mJoinTrainList = (ListView)findViewById(R.id.main_join_train_list);
 
+
+
         mJoinTrainButton = (Button)findViewById(R.id.main_join_train_button);
         mJoinTrainButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
