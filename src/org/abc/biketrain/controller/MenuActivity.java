@@ -1,6 +1,8 @@
 package org.abc.biketrain.controller;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +18,10 @@ public class MenuActivity extends Activity {
     private ListView mStartTrainList;
     private Button mStartTrainButton;
     private Button mJoinTrainButton;
+
+    public static Intent newIntent(Context context) {
+        return new Intent(context, MenuActivity.class);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

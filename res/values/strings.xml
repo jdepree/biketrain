@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">BikeTrain</string>
+    <string name="app_name">Bike Train</string>
 
     <string name="main_join_train_button">Join Train</string>
     <string name="main_join_existing_trains_text">Join an Existing Train</string>
     <string name="main_join_existing_trains_empty">There are currently no trains planned</string>
     <string name="main_start_train_button">Start Train</string>
     <string name="main_start_past_trains_text">Start a Train you Started Before</string>
-    <string name="main_start_past_trains_empty">You've never started a train</string>
+    <string name="main_start_past_trains_empty">You\'ve never started a train</string>
+    <string name="fragment_login_email">Email:</string>
+    <string name="fragment_login_password">Password:</string>
+    <string name="fragment_login_login_button">Login</string>
+    <string name="fragment_login_error">Your Username or Password is Incorrect</string>
 </resources>
