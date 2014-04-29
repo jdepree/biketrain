@@ -1,29 +1,28 @@
 <?php
-    require("utilities.php");
+    require_once("utilities.php");
 ?>
 
 <HTML>
 <HEAD>
     <TITLE>Map of Bike Trains</TITLE>
-    <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places,geometry"></script>
 </HEAD>
 <BODY >
 <?php if ($sessionId) { ?>
     <div id='dest-entry' style='margin:5px;'>
-    <FORM method='post' action='routes.php' >
+    <FORM method='post' action='rest/routes.php' >
     <input type='hidden' name='origin' value='browserRoute' />
     <input type='hidden' name='startLat' id='startLat' value='' /><input type='hidden' name='startLng' id='startLng' value='' />
     <input type='hidden' name='endLat' id='endLat' value='' /><input type='hidden' name='endLng' id='endLng' value='' />
     <input type='hidden' name='path' id='path' value='' /><input type='hidden' name='levels' id='levels' value='' />
     <input type='hidden' name='distance' id='distance' value='' />
 
-    <B>Create a Bike Train Route!</B>&nbsp;&nbsp;&nbsp;&nbsp;
     Where are you starting? <input type='text' name='startLocation' id='startLocation' style='width:300px;' />
     &nbsp;&nbsp;&nbsp;&nbsp;Where do you want to end up?  <input type='text' name='endLocation' id='endLocation' style='width:300px;' />
     &nbsp;&nbsp;&nbsp;&nbsp;<input type='button' name='saveRouteButton' id='saveRouteButton' value='Save Route' disabled onclick="submit();" />
-    </div>
-    </FORM>
      &nbsp;&nbsp;&nbsp;&nbsp;<a href='logout.php?origin=browserRoute'>Logout</a>
+    </FORM>
+        </div>
 <?php } else { ?>
 <div id='loginDiv' style='margin:5px;'>
 <FORM method='post' action='index.php' >
@@ -71,7 +70,37 @@ function initialize() {
     center: atlanta
   };
   map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-    directionsDisplay.setMap(map);
+  directionsDisplay.setMap(map);
+
+  <?php
+    $result = doQuery("SELECT route_path FROM routes");
+    while ($row = mysql_fetch_assoc($result)) {
+    ?>
+        decodedPath = google.maps.geometry.encoding.decodePath("<?php print $row['route_path']; ?>");
+        newPolyline = new google.maps.Polyline({
+             path: decodedPath,
+             strokeColor: '#FF0000',
+             strokeOpacity: 1.0,
+             strokeWeight: 2
+        });
+        newPolyline.setMap(map);
+        google.maps.event.addListener(newPolyline, 'dragend', function() {
+            points = response.routes[0].overview_polyline.points;
+
+            //decodedStr = google.maps.geometry.encoding.decodePath(points);
+            encodedStr = points.replace(/\\/g,"\\\\");
+
+            document.getElementById('path').value = encodedStr;
+
+            var total = 0;
+            for (i = 0; i < response.routes[0].legs.length; i++) {
+                total += response.routes[0].legs[i].distance.value;
+            }
+            document.getElementById("distance").value = total;
+        } );
+    <?php
+    }
+  ?>
 }
 
 function calcRoute(pointA, pointB) {
@@ -87,20 +116,18 @@ function calcRoute(pointA, pointB) {
         startMarker.setVisible(false);
         endMarker.setVisible(false);
 
-        /*points = result.routes[0].overview_polyline.points;
-        levels = result.routes[0].overview_polyline.levels;
+        points = response.routes[0].overview_polyline.points;
 
-        decodedStr = google.maps.geometry.encoding.decodePath(points);
-        decodedStr = decodedStr.replace(/\\/g,"\\\\");
+        //decodedStr = google.maps.geometry.encoding.decodePath(points);
+        encodedStr = points.replace(/\\/g,"\\\\");
 
-        document.getElementById('path').value = decodedStr;
-        document.getElementById('levels').value = levels;
+        document.getElementById('path').value = encodedStr;
 
         var total = 0;
-        for (i = 0; i < result.routes[0].legs.length; i++) {
-            total += results.routes[0].legs[i].distance.value;
+        for (i = 0; i < response.routes[0].legs.length; i++) {
+            total += response.routes[0].legs[i].distance.value;
         }
-        document.getElementById("distance").value = total;*/
+        document.getElementById("distance").value = total;
 
         document.getElementById('saveRouteButton').disabled = false;
     }
@@ -139,8 +166,8 @@ google.maps.event.addListener(autocompleteFinish, 'place_changed', function() {
              });
 
     finish = place.geometry.location;
-    document.getElementById('finishLat').value = finish.lat();
-    document.getElementById('finishLng').value = finish.lng();
+    document.getElementById('endLat').value = finish.lat();
+    document.getElementById('endLng').value = finish.lng();
 
     if (start && finish) {
         calcRoute(start, finish);
