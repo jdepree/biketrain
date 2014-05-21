@@ -3,7 +3,7 @@ define ('DB_HOST', 'localhost');
 define ('DB_USER', 'oar');
 define ('DB_PASSWORD', 'gearshed');
 define ('DB_DATABASE', 'biketrain');
-define ('BASE_URL', 'http://localhost');
+define ('BASE_URL', 'http://biketrain.foodnextdoor.org');
 define ('ADMIN_EMAIL', 'admin@localhost');
 
 function sendMailSend($receiver, $subject, $body, $from) {

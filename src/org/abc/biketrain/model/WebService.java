@@ -40,10 +40,6 @@ public class WebService {
         return false;
     }*/
 
-    public static void registerWithService(String userId, String serviceId) throws IOException {
-
-    }
-
     public static void sendRegistrationIdToBackend(String regId) throws IOException {
         ConnectionUtilities.sendRequest(URL_REGISTER_ID + "?regId=" + URLEncoder.encode(regId, "UTF-8"), ConnectionUtilities.GET, null, null, null);
     }

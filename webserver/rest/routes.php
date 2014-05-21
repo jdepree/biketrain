@@ -10,7 +10,7 @@ if ($method === 'POST') {
     $endLat = param('endLat');
     $endLng = param('endLng');
     $endLabel = param('endLocation');
-    $path = param('path');
+    $path = base64_encode(param('path'));
     $levels = param('levels');
     $distance = param('distance');
 

@@ -73,13 +73,22 @@ function initialize() {
   directionsDisplay.setMap(map);
 
   <?php
+
+  function random_color_part() {
+      return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
+  }
+
+  function random_color() {
+      return random_color_part() . random_color_part() . random_color_part();
+  }
+
     $result = doQuery("SELECT route_path FROM routes");
     while ($row = mysql_fetch_assoc($result)) {
     ?>
         decodedPath = google.maps.geometry.encoding.decodePath("<?php print $row['route_path']; ?>");
         newPolyline = new google.maps.Polyline({
              path: decodedPath,
-             strokeColor: '#FF0000',
+             strokeColor: '#<?php print random_color(); ?>',
              strokeOpacity: 1.0,
              strokeWeight: 2
         });
@@ -87,10 +96,10 @@ function initialize() {
         google.maps.event.addListener(newPolyline, 'dragend', function() {
             points = response.routes[0].overview_polyline.points;
 
-            //decodedStr = google.maps.geometry.encoding.decodePath(points);
-            encodedStr = points.replace(/\\/g,"\\\\");
+            encodedStr = /*google.maps.geometry.encoding.encodePath(points)*/points.replace(/\\/g,"\\\\");
 
-            document.getElementById('path').value = encodedStr;
+            document.getElementById('path').value = encodeURIComponent(encodedStr);
+
 
             var total = 0;
             for (i = 0; i < response.routes[0].legs.length; i++) {
@@ -118,10 +127,9 @@ function calcRoute(pointA, pointB) {
 
         points = response.routes[0].overview_polyline.points;
 
-        //decodedStr = google.maps.geometry.encoding.decodePath(points);
-        encodedStr = points.replace(/\\/g,"\\\\");
+        encodedStr = /*google.maps.geometry.encoding.encodePath(points)*/points.replace(/\\/g,"\\\\");
 
-        document.getElementById('path').value = encodedStr;
+        document.getElementById('path').value = encodeURIComponent(encodedStr);
 
         var total = 0;
         for (i = 0; i < response.routes[0].legs.length; i++) {
