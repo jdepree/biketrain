@@ -1,15 +1,9 @@
 package org.abc.biketrain.model;
 
-import android.content.Context;
-import android.util.Base64;
 import org.abc.biketrain.utilities.ConnectionUtilities;
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
 
 public class WebService {
     private static final String URL_WEB_SERVER = "http://biketrain.foodnextdoor.org/";

@@ -7,9 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.model.LatLng;
 import org.abc.biketrain.R;
 
 public class MenuActivity extends Activity {
@@ -29,7 +26,7 @@ public class MenuActivity extends Activity {
         setContentView(R.layout.layout_main);
 
         mJoinTrainList = (ListView)findViewById(R.id.main_join_train_list);
-
+        mJoinTrainList.setEmptyView(findViewById(R.id.main_join_existing_trains_none));
 
 
         mJoinTrainButton = (Button)findViewById(R.id.main_join_train_button);
@@ -40,7 +37,7 @@ public class MenuActivity extends Activity {
         });
 
         mStartTrainList = (ListView)findViewById(R.id.main_start_train_list);
-
+        mStartTrainList.setEmptyView(findViewById(R.id.main_start_train_none));
 
         mStartTrainButton = (Button)findViewById(R.id.main_start_train_button);
         mStartTrainButton.setOnClickListener(new View.OnClickListener() {

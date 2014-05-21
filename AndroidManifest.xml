@@ -51,10 +51,6 @@
 
         <service android:name=".GCMIntentService" />
 
-        <service
-                android:name=".controller.ReportingService"
-                android:exported="false"/>
-
         <meta-data
                 android:name="com.google.android.maps.v2.API_KEY"
                 android:value="AIzaSyAckG92TJX4EY6BV2C3QFWiWhwJS0sutNQ"/>

@@ -49,12 +49,18 @@
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/fragment_login_register_button" />
+            android:text="@string/fragment_login_register_button"
+            android:background="@null"
+            android:textColor="#FFFFFF"
+            />
 
     <Button android:id="@+id/fragment_forgot_password_button"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/fragment_login_forgot_password_button" />
+            android:text="@string/fragment_login_forgot_password_button"
+            android:background="@null"
+            android:textColor="#FFFFFF"
+            />
 
 </LinearLayout>
