@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import org.abc.biketrain.R;
@@ -28,24 +27,7 @@ public class MenuActivity extends Activity {
         mJoinTrainList = (ListView)findViewById(R.id.main_join_train_list);
         mJoinTrainList.setEmptyView(findViewById(R.id.main_join_existing_trains_none));
 
-
-        mJoinTrainButton = (Button)findViewById(R.id.main_join_train_button);
-        mJoinTrainButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-            }
-        });
-
         mStartTrainList = (ListView)findViewById(R.id.main_start_train_list);
-        mStartTrainList.setEmptyView(findViewById(R.id.main_start_train_none));
-
-        mStartTrainButton = (Button)findViewById(R.id.main_start_train_button);
-        mStartTrainButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
     }
 }

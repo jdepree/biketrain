@@ -93,20 +93,7 @@ function initialize() {
              strokeWeight: 2
         });
         newPolyline.setMap(map);
-        google.maps.event.addListener(newPolyline, 'dragend', function() {
-            points = response.routes[0].overview_polyline.points;
 
-            encodedStr = /*google.maps.geometry.encoding.encodePath(points)*/points.replace(/\\/g,"\\\\");
-
-            document.getElementById('path').value = encodeURIComponent(encodedStr);
-
-
-            var total = 0;
-            for (i = 0; i < response.routes[0].legs.length; i++) {
-                total += response.routes[0].legs[i].distance.value;
-            }
-            document.getElementById("distance").value = total;
-        } );
     <?php
     }
   ?>
@@ -124,23 +111,31 @@ function calcRoute(pointA, pointB) {
         directionsDisplay.setDirections(response);
         startMarker.setVisible(false);
         endMarker.setVisible(false);
+        saveRoute(directionsDisplay.getDirections());
 
-        points = response.routes[0].overview_polyline.points;
-
-        encodedStr = /*google.maps.geometry.encoding.encodePath(points)*/points.replace(/\\/g,"\\\\");
-
-        document.getElementById('path').value = encodeURIComponent(encodedStr);
-
-        var total = 0;
-        for (i = 0; i < response.routes[0].legs.length; i++) {
-            total += response.routes[0].legs[i].distance.value;
-        }
-        document.getElementById("distance").value = total;
-
-        document.getElementById('saveRouteButton').disabled = false;
+        google.maps.event.addListener(directionsDisplay, 'directions_changed', function() {
+            saveRoute(directionsDisplay.getDirections());
+        });
     }
   });
 
+
+}
+
+function saveRoute(directions) {
+    points = directions.routes[0].overview_path;
+    encodedStr = google.maps.geometry.encoding.encodePath(points);
+    encodedStr = encodedStr.replace(/\\/g,"\\\\");
+
+    document.getElementById('path').value = encodeURIComponent(encodedStr);
+
+    var total = 0;
+    for (i = 0; i < directions.routes[0].legs.length; i++) {
+        total += directions.routes[0].legs[i].distance.value;
+    }
+    document.getElementById("distance").value = total;
+
+    document.getElementById('saveRouteButton').disabled = false;
 
 }
 

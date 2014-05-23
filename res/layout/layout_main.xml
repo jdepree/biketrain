@@ -32,22 +32,40 @@
     <LinearLayout android:layout_height="wrap_content"
                   android:layout_width="match_parent"
                   android:orientation="horizontal" >
-    <EditText android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:layout_weight="1"
-              />
+        <EditText android:id="@+id/main_start_location_edit"
+                android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:hint="@string/main_start_location_hint" />
 
-    <EditText android:id="@+id/main_start_location_edit"
+        <EditText android:id="@+id/main_end_location_edit"
+                    android:layout_height="wrap_content"
+                  android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="@string/main_end_location_hint" />
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_height="wrap_content"
+                  android:layout_width="match_parent"
+                  android:orientation="horizontal" >
+        <Button android:id="@+id/main_start_now_button"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-              android:layout_width="0dp"
-                android:layout_weight="1" />
-
+                android:layout_weight="1"
+                android:text="@string/main_start_now_button" />
+        <Button android:id="@+id/main_start_later_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/main_start_later_button" />
     </LinearLayout>
 
     <ListView android:id="@+id/main_start_train_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            />
 
 
 </LinearLayout>

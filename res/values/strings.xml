@@ -3,8 +3,12 @@
     <string name="app_name">Bike Train</string>
 
     <string name="main_join_existing_trains_text">Join an Existing Train</string>
-    <string name="main_join_existing_trains_empty">There are currently no trains planned</string>
+    <string name="main_join_existing_trains_empty">There are currently no trains running or planned</string>
     <string name="main_start_train_text">Start a New Train</string>
+    <string name="main_start_location_hint">Start Location</string>
+    <string name="main_start_now_button">Ride Now</string>
+    <string name="main_start_later_button">Ride Later</string>
+    <string name="main_end_location_hint">End Location</string>
     <string name="fragment_login_email">Email:</string>
     <string name="fragment_login_password">Password:</string>
     <string name="fragment_login_login_button">Login</string>
