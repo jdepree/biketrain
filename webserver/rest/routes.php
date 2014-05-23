@@ -14,6 +14,8 @@ if ($method === 'POST') {
     $levels = param('levels');
     $distance = param('distance');
 
+    print "PATH ".$path;
+
     $result = doQuery("SELECT loc_id FROM waypoints WHERE loc_lat = $startLat AND loc_lng = $startLng");
     if ($row = mysql_fetch_assoc($result)) {
         $startId = $row['loc_id'];
@@ -32,7 +34,7 @@ if ($method === 'POST') {
 
     doQuery("INSERT INTO routes (route_start_location, route_end_location, route_path, route_levels, route_distance, route_label, route_defined_by) VALUES ($startId, $endId, '$path', '$levels', $distance, '$startLabel -> $endLabel', $sessionId)");
 
-    include('../index.php');
+    //include('../index.php');
 } elseif ($method === 'GET') {
 
 }
